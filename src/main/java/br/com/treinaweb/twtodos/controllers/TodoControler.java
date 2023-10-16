@@ -3,6 +3,7 @@ package br.com.treinaweb.twtodos.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.com.treinaweb.twtodos.models.Todo;
 import br.com.treinaweb.twtodos.repositories.TodoRepository;
+import jakarta.validation.Valid;
 
 @Controller
 public class TodoControler {
@@ -35,7 +37,12 @@ public class TodoControler {
   }
 
   @PostMapping("/create")
-  public String create(Todo todo) {
+  public String create(@Valid Todo todo, BindingResult result) {
+
+    if(result.hasErrors()) {
+      return "todo/form";
+    }
+
     todoRepository.save(todo);
     return "redirect:/";
   }
@@ -55,7 +62,12 @@ public class TodoControler {
   }  
 
   @PostMapping("/edit/{id}")
-  public String edit(Todo todo) {
+  public String edit(@Valid Todo todo, BindingResult result) {
+
+    if(result.hasErrors()) {
+      return "todo/form";
+    }
+
     todoRepository.save(todo);
     return "redirect:/";
   }
