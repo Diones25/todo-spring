@@ -37,11 +37,16 @@ public class Todo {
   @DateTimeFormat(iso = ISO.DATE)
   private LocalDate deadline;
 
+  @FutureOrPresent
   @Column(nullable = true)
   private LocalDate fineshedAt;
 
   public Todo() {
     this.createdAt = LocalDateTime.now();    
+  }
+
+  public void markHasFinished() {
+    this.fineshedAt = LocalDate.now();    
   }
 
   public Long getId() {
